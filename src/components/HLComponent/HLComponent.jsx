@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import './HLComponent.css'; // Assuming you have a CSS file for styling
-
+import Carousel from 'react-bootstrap/Carousel';
 const HeatLoadCalculator = () => {
   const [roomAreaSqFt, setRoomAreaSqFt] = useState('');
   const [occupants, setOccupants] = useState('');
@@ -31,7 +31,9 @@ const HeatLoadCalculator = () => {
 
   return (
     <div className="container">
+      <div className='input-el'>
       <h2>Fill all the fields</h2>
+      <hr></hr>
       <form onSubmit={handleSubmit}>
         <label htmlFor="roomAreaSqFt">Room Area (in square feet):</label>
         <input
@@ -72,10 +74,39 @@ const HeatLoadCalculator = () => {
           placeholder="Enter total equipment load"
           required
         />
-
+        <br></br>
+        <br></br>
         <button type="submit">Calculate Heat Load</button>
       </form>
-
+      </div>
+      <div className='right-el'>
+      <div className='c-edit'>
+      <Carousel>
+      <Carousel.Item>
+        <img
+          className="d-block w-100"
+          src="src\assets\HVAC-Cooling-Load-.jpg"
+          alt="First slide"
+        />
+      </Carousel.Item>
+      <Carousel.Item>
+        <img
+          className="d-block w-100"
+          src="src\assets\cooling-load-components.png"
+          alt="Second slide"
+        />
+      </Carousel.Item>
+      <Carousel.Item>
+        <img
+          className="d-block w-100"
+          src="src\assets\cooling-load-calculations.jpg"
+          alt="Third slide"
+        />
+      </Carousel.Item>
+    </Carousel>
+    </div>
+      
+      <div className='result-el'>
       {heatLoad !== null && (
         <div id="result">
           <h3>Results:</h3>
@@ -84,6 +115,9 @@ const HeatLoadCalculator = () => {
           <p>Tonage of Air-conditioner Required: <span id='acTon'>{acTon}</span></p>
         </div>
       )}
+      </div>
+      </div>
+      
     </div>
   );
 };
