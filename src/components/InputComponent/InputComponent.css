@@ -1,0 +1,23 @@
+header{
+    h1{
+        color: rgb(255, 255, 255);
+        margin: 20px;
+        margin-bottom: 10px;
+        font-weight: bolder;
+    }
+    height: 15vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: end;
+    background-image: url('C:\Users\Lenovo\Desktop\practical\heat-load-calc\src\assets\360_F_314846423_lE6jmwPXVbmdtBxuowmjCxHUZIHgF5xq.jpg');
+    background-size: 100% 100%;
+    background-position: center;
+    color: white;
+}
+.input-section{
+    background-color: rgb(227, 249, 245);
+    min-height: 100vh;
+    section{
+        margin: 10px;
+    }
+}
