@@ -21,7 +21,7 @@ body {
     .logo{
       display: flex;
       align-items: center;
-      width:80px;
+      width:100px;
       margin-top: 5px;
       margin-left: 0;
       margin-right: 5px;
@@ -29,7 +29,7 @@ body {
   }
   .nav-left h1 {
     margin: 0;
-    font-size: 23px;
+    font-size: 40px;
     font-weight:700;
   }
   
@@ -42,6 +42,7 @@ body {
   
   .nav-right li {
     margin-left: 20px;
+    font-size: x-large;
   }
   
   .nav-right a {
@@ -52,4 +53,20 @@ body {
   
   .nav-right a:hover {
     text-decoration: underline;
+  }
+
+  @media (max-width: 868px) {
+    .nav-left h1 {
+      margin: 0;
+      font-size: 18px;
+      font-weight:700;
+    }
+    .nav-left{
+      .logo{
+        width:56px;
+      }
+    }
+    .nav-right li{
+      font-size: 15px;
+    }
   }

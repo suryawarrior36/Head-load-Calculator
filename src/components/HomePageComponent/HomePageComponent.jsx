@@ -1,9 +1,11 @@
 import React from 'react'
-
+import './HomePageComponent.css'
 const HomePageComponent = () => {
   return (
     <>
-    <h1>Homepage component</h1>
+    <div className='main-el'>
+      <h1>Home page</h1>
+    </div>
     </>
   )
 }
