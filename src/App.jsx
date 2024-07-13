@@ -14,13 +14,13 @@ const App = () => {
       </div>
       <div className='nav-right'>
       <ul>
-        <li><Link to='/'>Home</Link></li>
+        {/* <li><Link to='/'>Home</Link></li> */}
         <li><Link to='calc'>Calculator</Link></li>
       </ul>
       </div>
     </nav>
     <Routes>
-      <Route path='/' element={<HomePageComponent/>} />
+      {/* <Route path='/' element={<HomePageComponent/>} /> */}
       <Route path='/calc' element={<InputComponent/>} />
     </Routes>
     </>

@@ -2,39 +2,49 @@ import React, { useState } from 'react';
 import './HLComponent.css';
 import Carousel from 'react-bootstrap/Carousel';
 
+const appliances = [
+  { name: 'TV', power: 150 },
+  { name: 'Refrigerator', power: 200 },
+  { name: 'Computer', power: 300 },
+  { name: 'Microwave', power: 1000 },
+  { name: 'Fan', power: 75 },
+];
+
 const HeatLoadCalculator = () => {
   const [roomAreaSqFt, setRoomAreaSqFt] = useState('');
   const [occupants, setOccupants] = useState('');
   const [lightFixtures, setLightFixtures] = useState('');
-  const [equipment, setEquipment] = useState('');
+  const [equipment, setEquipment] = useState(appliances.map(() => ""));
   const [roofOpen, setRoofOpen] = useState('No');
   const [heatLoad, setHeatLoad] = useState(null);
   const [acCapacity, setAcCapacity] = useState(null);
   const [acTon, setAcTon] = useState(null);
 
+  const handleEquipmentChange = (index, value) => {
+    const newEquipment = [...equipment];
+    newEquipment[index] = parseInt(value) || 0;
+    setEquipment(newEquipment);
+  };
+
   const handleSubmit = (e) => {
-    e.preventDefault(); // Prevent the default form submission
+    e.preventDefault();
 
-    // Convert room area from sq.ft to sq.m
     const roomAreaSqM = roomAreaSqFt * 0.092903;
+    const areaHeatLoad = roomAreaSqM * 60;
+    const occupantHeatLoad = occupants * 120;
+    const lightingHeatLoad = lightFixtures * 80;
 
-    // Adjusted factors for heat load calculation
-    const areaHeatLoad = roomAreaSqM * 15; // Adjusted area heat load factor
-    const occupantHeatLoad = occupants * 150; // Adjusted occupant heat load factor
+    const equipmentHeatLoad = equipment.reduce((total, quantity, index) => {
+      return total + (quantity * appliances[index].power);
+    }, 0);
 
-    // Other factors remain the same
-    const lightingHeatLoad = lightFixtures * 50;
-    const equipmentHeatLoad = equipment * 4;
-    const roofHeatLoad = roofOpen === 'Yes' ? roomAreaSqM * 300 : 0;
+    const roofHeatLoad = roofOpen === 'Yes' ? roomAreaSqM * 100 : roomAreaSqM * 75;
 
-    // Calculate total heat load
     const totalHeatLoad = areaHeatLoad + occupantHeatLoad + lightingHeatLoad + equipmentHeatLoad + roofHeatLoad;
 
-    // Example: 1 watt = 3.41 BTU/h
     const capacity = totalHeatLoad * 3.41;
     const tonnage = capacity / 12000;
 
-    // Update state with calculated values
     setHeatLoad(totalHeatLoad.toFixed(2));
     setAcCapacity(capacity.toFixed(2));
     setAcTon(tonnage.toFixed(2));
@@ -76,15 +86,19 @@ const HeatLoadCalculator = () => {
             required
           />
 
-          <label htmlFor="equipment">Total Equipment Load (in watts):</label>
-          <input
-            type="number"
-            id="equipment"
-            value={equipment}
-            onChange={(e) => setEquipment(e.target.value)}
-            placeholder="Enter total equipment load"
-            required
-          />
+          <label htmlFor="equipment">Appliances:</label>
+          {appliances.map((appliance, index) => (
+            <div key={index}>
+              <label htmlFor={`appliance-${index}`}>{appliance.name}:</label>
+              <input
+                type="number"
+                id={`appliance-${index}`}
+                value={equipment[index]}
+                onChange={(e) => handleEquipmentChange(index, e.target.value)}
+                placeholder={`Enter number of ${appliance.name}s`}
+              />
+            </div>
+          ))}
 
           <label htmlFor="roofOpen">Is the roof open to sunlight?</label>
           <select
@@ -96,7 +110,7 @@ const HeatLoadCalculator = () => {
             <option value="No">No</option>
             <option value="Yes">Yes</option>
           </select>
-          
+
           <br></br>
           <br></br>
           <button type="submit">Calculate Heat Load</button>
